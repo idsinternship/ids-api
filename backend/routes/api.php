@@ -28,3 +28,11 @@ Route::middleware('auth:api')->prefix('instructor')->group(function () {
     Route::put('/courses/{id}', [InstructorCourseController::class, 'update']);
     Route::delete('/courses/{id}', [InstructorCourseController::class, 'destroy']);
 });
+
+
+use App\Http\Controllers\LessonProgressController;
+
+Route::middleware('auth:api')->post(
+    '/lessons/{lesson}/complete',
+    [LessonProgressController::class, 'complete']
+);
