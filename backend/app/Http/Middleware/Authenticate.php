@@ -7,13 +7,10 @@ use Illuminate\Http\Request;
 
 class Authenticate extends Middleware
 {
-    protected function redirectTo(Request $request): ?string
-    {
-        // 🚫 Never redirect for API requests
-        if ($request->expectsJson()) {
-            return null;
-        }
-
+protected function redirectTo($request)
+{
+    if (! $request->expectsJson()) {
         return null;
     }
+}
 }

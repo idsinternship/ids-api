@@ -2,20 +2,15 @@
 
 return [
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [
-        'https://verbose-space-potato-97v6qv9677r299rq-5173.app.github.dev',
-        'https://localhost:5173',
-    ],
-
-    'allowed_origins_patterns' => [],
+    'allowed_origins' => ['*'],
 
     'allowed_headers' => ['*'],
 
-    'exposed_headers' => ['Authorization'],
+    'exposed_headers' => [],
 
     'max_age' => 0,
 

@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Models;
-
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
+    use HasFactory, Notifiable;
+
     protected $fillable = [
         'name',
         'email',
@@ -25,8 +24,6 @@ class User extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims()
     {
-        return [
-            'role' => $this->role,
-        ];
+        return [];
     }
 }

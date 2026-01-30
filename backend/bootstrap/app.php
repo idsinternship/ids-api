@@ -11,24 +11,12 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-
-    // ✅ REGISTER MIDDLEWARE (Laravel 12 way)
     ->withMiddleware(function (Middleware $middleware) {
-        // JWT middleware alias
         $middleware->alias([
-            'jwt.auth' => \App\Http\Middleware\JwtAuthMiddleware::class,
+            'jwt' => \App\Http\Middleware\JwtAuthMiddleware::class,
         ]);
     })
-
-    // ✅ FORCE JSON ERRORS FOR API (NO HTML, NO REDIRECTS)
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->render(function (\Throwable $e, $request) {
-            if ($request->is('api/*')) {
-                return response()->json([
-                    'message' => $e->getMessage(),
-                ], 401);
-            }
-        });
+        //
     })
-
     ->create();
