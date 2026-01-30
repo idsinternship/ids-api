@@ -9,21 +9,20 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
-            'role' => 'in:student,instructor,admin',
+            'role' => 'required|in:student,instructor',
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'role' => $request->role ?? 'student',
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'role' => $data['role'],
         ]);
 
-        // ✅ FORCE JWT GUARD
         $token = auth('api')->login($user);
 
         return response()->json([
@@ -37,7 +36,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (! $token = auth('api')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Invalid credentials'], 401);
         }
 
         return response()->json([
